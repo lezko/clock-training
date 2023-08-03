@@ -1,0 +1,70 @@
+.clock {
+  max-width: 400px;
+  aspect-ratio: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+  }
+
+  .mark, .minuteMark, .hArrow, .mArrow, .sArrow {
+    height: 1px ;
+    position: absolute;
+    transform: rotate(var(--rot));
+    width: 100%;
+  }
+  .mark:after, .minuteMark:after, .hArrow:after, .mArrow:after, .sArrow:after {
+    display: block;
+    position: absolute;
+    content: '';
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: black;
+  }
+
+  .mark {
+    height: 2px;
+    display: flex;
+    align-items: center;
+    &:after {
+      width: 7%;
+    }
+    .number {
+      position: absolute;
+      left: 10%;
+      transform: rotate(var(--rot));
+    }
+  }
+  .minuteMark {
+    &:after {
+      width: 3%;
+    }
+  }
+
+  .hArrow:after, .mArrow:after, .sArrow:after {
+    left: 50%;
+  }
+  .hArrow {
+    height: 4px;
+    &:after {
+      width: 20%;
+    }
+  }
+  .mArrow {
+    height: 3px;
+    &:after {
+      width: 35%;
+    }
+  }
+  .sArrow {
+    &:after {
+      width: 40%;
+    }
+  }
+}
