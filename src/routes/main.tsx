@@ -1,7 +1,12 @@
-import Clock from 'components/Clock';
 import {useEffect, useState} from 'react';
+import Clock from 'components/Clock';
+import styles from 'scss/pages/main.module.scss';
+import {NavLink} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCircleInfo, faGear} from '@fortawesome/free-solid-svg-icons';
+import IconLink from 'components/IconLink';
 
-const App = () => {
+const Main = () => {
     const t = new Date();
     const millis = t.getMilliseconds();
     function mapDateToState(time: Date) {
@@ -32,11 +37,19 @@ const App = () => {
     }, []);
 
     return (
-        <div>
+        <div className={styles.main}>
+            <nav className={styles.navbar}>
+                <ul>
+                    <li><IconLink icon={faCircleInfo} path="/about" /></li>
+                    <li><IconLink icon={faGear} path="/settings" /></li>
+                </ul>
+            </nav>
             {/* todo 24h format */}
-            <Clock hour={time.h} min={time.m} sec={time.s} />
+            <Clock className={styles.clock} hour={time.h} min={time.m} sec={time.s} />
+
+
         </div>
     );
 };
 
-export default App;
+export default Main;

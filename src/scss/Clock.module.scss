@@ -5,6 +5,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  border: 2px solid black;
+
   .dot {
     width: 10px;
     height: 10px;

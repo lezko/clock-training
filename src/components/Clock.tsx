@@ -1,13 +1,17 @@
 import styles from 'scss/Clock.module.scss';
 import {CSSProperties, FC} from 'react';
+import {useSettings} from 'hooks/settings';
 
 interface ClockProps {
     sec?: number;
     min: number;
     hour: number;
+    className?: string;
 }
 
-const Clock: FC<ClockProps> = ({min, hour, sec = 0}) => {
+const Clock: FC<ClockProps> = ({min, hour, sec = 0, className}) => {
+    const settings = useSettings();
+
     function getRotationStyle(deg: number) {
         return {
             '--rot': deg - 90 + 'deg'
@@ -23,28 +27,29 @@ const Clock: FC<ClockProps> = ({min, hour, sec = 0}) => {
                     className={styles.minuteMark}
                     style={getRotationStyle(i * 30 + j * 6)}
                 />
-            )
+            );
         }
     }
 
     return (
-        <div className={styles.clock}>
+        <div className={styles.clock + ' ' + (className || '')}>
             {Array(12).fill(null).map((_, i) =>
                 <div
                     key={i}
                     className={styles.mark}
                     style={getRotationStyle(i * 30)}
                 >
-                    <span
-                        className={styles.number}
-                        // style={getRotationStyle(360 - i * 30)}
-                        style={getRotationStyle(i * -30 + 180)}
-                    >
-                        {((i + 6) % 12) || 12}
-                    </span>
+                    {settings.showNumbers &&
+                        <span
+                            className={styles.number}
+                            style={getRotationStyle(i * -30 + 180)}
+                        >
+                            {((i + 6) % 12) || 12}
+                        </span>
+                    }
                 </div>
             )}
-            {minuteMarks}
+            {settings.showMinuteMarks && minuteMarks}
 
             <div
                 className={styles.hArrow}
