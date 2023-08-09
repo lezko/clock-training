@@ -11,6 +11,8 @@ interface ClockProps {
 
 const Clock: FC<ClockProps> = ({min, hour, sec = 0, className}) => {
     const settings = useSettings();
+    const classList = [styles.clock];
+    classList.push(className || '');
 
     function getRotationStyle(deg: number) {
         return {
@@ -32,7 +34,7 @@ const Clock: FC<ClockProps> = ({min, hour, sec = 0, className}) => {
     }
 
     return (
-        <div className={styles.clock + ' ' + (className || '')}>
+        <div className={classList.join(' ')}>
             {Array(12).fill(null).map((_, i) =>
                 <div
                     key={i}
@@ -59,11 +61,11 @@ const Clock: FC<ClockProps> = ({min, hour, sec = 0, className}) => {
                 className={styles.mArrow}
                 style={getRotationStyle(0.1 * (min * 60 + sec))}
             />
-            {/* todo settings show sec arrow */}
-            <div
+
+            {settings.showSeconds && <div
                 className={styles.sArrow}
                 style={getRotationStyle(sec * 6)}
-            />
+            />}
 
             <div className={styles.dot} />
         </div>

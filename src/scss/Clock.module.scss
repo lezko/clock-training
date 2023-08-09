@@ -6,13 +6,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 2px solid black;
+  //border: 2px solid black;
 
   .dot {
     width: 10px;
     height: 10px;
+    z-index: 5;
     border-radius: 50%;
-    background-color: black;
+    background-color: var(--secondary-color);
   }
 
   .mark, .minuteMark, .hArrow, .mArrow, .sArrow {
@@ -28,19 +29,19 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: black;
+    background-color: var(--primary-color);
   }
 
   .mark {
-    height: 2px;
+    height: 3px;
     display: flex;
     align-items: center;
     &:after {
-      width: 7%;
+      width: 5%;
     }
     .number {
       position: absolute;
-      left: 10%;
+      left: 7%;
       transform: rotate(var(--rot));
     }
   }

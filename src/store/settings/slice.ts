@@ -1,4 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {setColorTheme} from 'themes';
+import {ThemeType} from 'enums/ThemeType';
 
 export interface SettingsState {
     showNumbers: boolean;
@@ -9,6 +11,7 @@ export interface SettingsState {
     valueSpread: number;
     answerTime: number;
     enableSecondsInput: boolean;
+    theme: ThemeType;
 }
 
 const initialState: SettingsState = {
@@ -18,7 +21,8 @@ const initialState: SettingsState = {
     autoConfirm: false,
     valueSpread: 300,
     answerTime: 5,
-    enableSecondsInput: false
+    enableSecondsInput: false,
+    theme: ThemeType.Dark
 };
 
 function getSettingsFromStorage(): SettingsState {
@@ -35,6 +39,7 @@ function saveSettingsToStorage(settings: SettingsState) {
 
 try {
     saveSettingsToStorage({...initialState, ...getSettingsFromStorage()});
+    setColorTheme(getSettingsFromStorage().theme);
 } catch (e: any) {
     saveSettingsToStorage(initialState);
 }
@@ -46,6 +51,9 @@ const settingsSlice = createSlice({
         setSettings(state, action: PayloadAction<Partial<SettingsState>>) {
             const newSettings = {...state, ...action.payload};
             saveSettingsToStorage(newSettings);
+            if (action.payload.theme) {
+                setColorTheme(action.payload.theme);
+            }
             return newSettings;
         }
     }

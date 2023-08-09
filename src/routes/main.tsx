@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react';
 import Clock from 'components/Clock';
 import styles from 'scss/pages/main.module.scss';
-import {NavLink} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import navStyles from 'scss/Nav.module.scss';
 import {faCircleInfo, faGear} from '@fortawesome/free-solid-svg-icons';
 import IconLink from 'components/IconLink';
 
@@ -38,7 +37,7 @@ const Main = () => {
 
     return (
         <div className={styles.main}>
-            <nav className={styles.navbar}>
+            <nav className={navStyles.nav}>
                 <ul>
                     <li><IconLink icon={faCircleInfo} path="/about" /></li>
                     <li><IconLink icon={faGear} path="/settings" /></li>
@@ -46,7 +45,6 @@ const Main = () => {
             </nav>
             {/* todo 24h format */}
             <Clock className={styles.clock} hour={time.h} min={time.m} sec={time.s} />
-
 
         </div>
     );
