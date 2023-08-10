@@ -36,7 +36,18 @@ input, button {
 /*fixme maybe cringe*/
 button {
     cursor: pointer;
+    transition: .3s;
+}
+/* todo button:focus*/
+button:hover {
+    /*    todo hover effects*/
+    color: var(--bg-color);
+    background-color: var(--primary-color);
 }
 button[disabled] {
     cursor: default;
+    color: gray;
+    border-color: gray;
+    background-color: var(--bg-color);
+
 }

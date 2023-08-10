@@ -23,7 +23,7 @@ const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeLeft, correctAnswe
         }
 
         if (isAnswerCorrect) {
-            return <FontAwesomeIcon icon={faCheck} />
+            return <FontAwesomeIcon className={styles.check} icon={faCheck} />
         }
 
         if (!correctAnswer) {
@@ -31,7 +31,7 @@ const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeLeft, correctAnswe
         }
         return (
             <div>
-                <FontAwesomeIcon icon={faXmark} />
+                <FontAwesomeIcon className={styles.xMark} icon={faXmark} />
                 <span>{correctAnswer.h}:{correctAnswer.m}{enableSecondsInput && (':' + correctAnswer.s)}</span>
             </div>
         );

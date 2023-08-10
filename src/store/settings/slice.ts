@@ -12,6 +12,7 @@ export interface SettingsState {
     roundCount: number;
     answerTime: number;
     enableSecondsInput: boolean;
+    newRoundDelay: number;
     theme: ThemeType;
 }
 
@@ -23,6 +24,7 @@ const initialState: SettingsState = {
     valueSpread: 300,
     answerTime: 10,
     roundCount: 5,
+    newRoundDelay: 3,
     enableSecondsInput: false,
     theme: ThemeType.Dark
 };

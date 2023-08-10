@@ -1,5 +1,5 @@
 import Cleave from 'cleave.js/react';
-import {FC, useState} from 'react';
+import {FC} from 'react';
 import {useSettings} from 'hooks/settings';
 import styles from 'scss/TimeForm.module.scss';
 import {ITime} from 'types/ITime';
@@ -7,13 +7,15 @@ import {ITime} from 'types/ITime';
 const RAW_INPUT_LENGTH = 5;
 const RAW_INPUT_LENGTH_SEC = 8;
 
-interface TimeInputFormProps {
+interface TimeFormProps {
+    timeStr: string;
+    setTimeStr: (str: string) => void;
+    disabled: boolean;
     onSubmit: (time: ITime) => void;
 }
 
-const TimeForm: FC<TimeInputFormProps> = ({onSubmit}) => {
+const TimeForm: FC<TimeFormProps> = ({onSubmit, timeStr, setTimeStr, disabled}) => {
     const {autoConfirm, enableSecondsInput} = useSettings();
-    const [timeStr, setTimeStr] = useState('');
     function handleChange(e: any) {
         const nextTimeStr = e.target.value;
         setTimeStr(nextTimeStr);
@@ -47,12 +49,13 @@ const TimeForm: FC<TimeInputFormProps> = ({onSubmit}) => {
     return (
         <form onSubmit={e => e.preventDefault()} className={styles.timeForm}>
             <Cleave
+                disabled={disabled}
                 placeholder={enableSecondsInput ? 'hh:mm:ss' : 'hh:mm'}
                 value={timeStr}
                 options={{time: true, timePattern: enableSecondsInput ? ['h', 'm', 's'] : ['h', 'm'], timeFormat: '12'}}
                 onChange={handleChange}
             />
-            {!autoConfirm && <button disabled={!isFulfilled(timeStr)} onClick={handleSubmit}>OK</button>}
+            {!autoConfirm && <button disabled={!isFulfilled(timeStr) || disabled} onClick={handleSubmit}>OK</button>}
         </form>
     );
 };

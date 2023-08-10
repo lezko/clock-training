@@ -1,4 +1,4 @@
-import {createRef, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Clock from 'components/Clock';
 import styles from 'scss/pages/main.module.scss';
 import navStyles from 'scss/Nav.module.scss';
@@ -46,16 +46,20 @@ const Main = () => {
     const [roundStatus, setRoundStatus] = useState<'finished' | 'going'>('going');
     const [roundTime, setRoundTime] = useState<ITime>({h: 0, m: 0, s: 0});
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(settings.answerTime);
-    const [currentRound, setCurrentRound] = useState(1);
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [timeStr, setTimeStr] = useState('');
+    const [currentRound, setCurrentRound] = useState(0);
     const roundIntervalRef = useRef<any>();
+
+    const [newRoundTimeLeft, setNewRoundTimeLeft] = useState(0);
+    const newRoundInterval = useRef<any>();
 
     function decrementTimeLeftWithFinishCheck() {
         let nextTimeLeft;
         setTimeLeft(prevState => {
             nextTimeLeft = prevState - 1;
             if (nextTimeLeft === 0) {
-                clearInterval(roundIntervalRef.current);
+                finishRound();
             }
             return nextTimeLeft;
         });
@@ -63,9 +67,47 @@ const Main = () => {
 
     function startGame() {
         setStatus('playing');
+        startRound();
+    }
+
+    function finishGame() {
+        finishRound();
+        setStatus('default');
+    }
+
+    function startRound() {
+        if (currentRound === settings.roundCount) {
+            finishGame();
+        }
+        setTimeStr('');
+        setTimeLeft(settings.answerTime);
+        setCurrentRound(prevState => prevState + 1);
         setRoundTime(generateTime());
         setRoundStatus('going');
         roundIntervalRef.current = setInterval(decrementTimeLeftWithFinishCheck, 1000);
+    }
+
+    function finishRound(time?: ITime) {
+        // todo accept answer if it is ready but 'ok' not clicked
+        if (time) {
+            setIsAnswerCorrect(compareTime(time, roundTime, settings.valueSpread));
+        } else {
+            setIsAnswerCorrect(false);
+        }
+        setRoundStatus('finished');
+        // todo figure out clearing interval on unmount
+        clearInterval(roundIntervalRef.current);
+        setNewRoundTimeLeft(settings.newRoundDelay);
+        newRoundInterval.current = setInterval(() => {
+            setNewRoundTimeLeft(prevState => {
+                const nextNewRoundTimeLeft = prevState - 1;
+                if (nextNewRoundTimeLeft === 0) {
+                    startRound();
+                    clearInterval(newRoundInterval.current);
+                }
+                return nextNewRoundTimeLeft;
+            })
+        }, 1000);
     }
 
     function getStatusDependentHtml() {
@@ -84,10 +126,19 @@ const Main = () => {
                     totalRounds={settings.roundCount}
                     timeLeft={timeLeft}
                 />
-                <TimeForm onSubmit={time => {
-                    setIsAnswerCorrect(compareTime(time, roundTime, settings.valueSpread));
-                    setRoundStatus('finished');
-                }} />
+                <TimeForm
+                    onSubmit={finishRound}
+                    timeStr={timeStr}
+                    setTimeStr={setTimeStr}
+                    disabled={roundStatus === 'finished'}
+                />
+                <div className={styles.inGameBtns}>
+                    <button onClick={finishGame}>STOP</button>
+                    <button disabled={roundStatus === 'going'} onClick={() => {
+                        clearInterval(newRoundInterval.current);
+                        startRound();
+                    }}>NEXT {roundStatus === 'finished' ? (`(${newRoundTimeLeft})`) : ''}</button>
+                </div>
             </>
         );
     }
