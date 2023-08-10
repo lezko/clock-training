@@ -9,6 +9,7 @@ export interface SettingsState {
     autoConfirm: boolean;
     // todo find better name
     valueSpread: number;
+    roundCount: number;
     answerTime: number;
     enableSecondsInput: boolean;
     theme: ThemeType;
@@ -20,7 +21,8 @@ const initialState: SettingsState = {
     showSeconds: true,
     autoConfirm: false,
     valueSpread: 300,
-    answerTime: 5,
+    answerTime: 10,
+    roundCount: 5,
     enableSecondsInput: false,
     theme: ThemeType.Dark
 };

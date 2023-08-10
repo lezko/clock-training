@@ -1,0 +1,11 @@
+.timeForm {
+  display: flex;
+  // fixme extract positioning to main page's styles
+
+  input {
+    min-width: 0;
+  }
+  button {
+    margin-left: 10px;
+  }
+}

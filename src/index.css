@@ -25,3 +25,18 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input, button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    border-radius: 5px;
+}
+/*fixme maybe cringe*/
+button {
+    cursor: pointer;
+}
+button[disabled] {
+    cursor: default;
+}

@@ -1,7 +1,21 @@
 .main {
+  height: 1px;
+  button, input {
+    border: 1px solid var(--primary-color);
+    font-size: 2rem;
+  }
+  input {
+    padding: 10px;
+  }
+  button {
+    padding: 10px;
+  }
 
+  .startBtn {
+    width: 100%;
+  }
 }
 
 .clock {
-  margin: 30px auto 0;
+  margin: 30px auto 30px;
 }
