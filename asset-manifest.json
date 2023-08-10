@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/clock-training/static/css/main.ec29bd5e.css",
+    "main.js": "/clock-training/static/js/main.5829d6dd.js",
+    "index.html": "/clock-training/index.html",
+    "main.ec29bd5e.css.map": "/clock-training/static/css/main.ec29bd5e.css.map",
+    "main.5829d6dd.js.map": "/clock-training/static/js/main.5829d6dd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ec29bd5e.css",
+    "static/js/main.5829d6dd.js"
+  ]
+}
