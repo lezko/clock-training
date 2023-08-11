@@ -46,6 +46,7 @@ try {
     setColorTheme(getSettingsFromStorage().theme);
 } catch (e: any) {
     saveSettingsToStorage(initialState);
+    setColorTheme(getSettingsFromStorage().theme);
 }
 
 const settingsSlice = createSlice({
