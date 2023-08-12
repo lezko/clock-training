@@ -8,13 +8,13 @@ import {useSettings} from 'hooks/settings';
 interface GameInfoProps {
     round: number;
     totalRounds: number;
-    timeLeft: number;
+    timeRemaining: number;
     isAnswerCorrect?: boolean;
     //todo interface ITime
     correctAnswer?: ITime;
 }
 
-const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeLeft, correctAnswer, isAnswerCorrect}) => {
+const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeRemaining, correctAnswer, isAnswerCorrect}) => {
     const {enableSecondsInput} = useSettings();
 
     function getRoundResult() {
@@ -41,7 +41,7 @@ const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeLeft, correctAnswe
         <div className={styles.gameInfo}>
             <div>Round {round} / {totalRounds || <FontAwesomeIcon icon={faInfinity} />}</div>
             {getRoundResult()}
-            <div>{timeLeft}s</div>
+            <div>{timeRemaining}s</div>
         </div>
     );
 };

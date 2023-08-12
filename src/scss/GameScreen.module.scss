@@ -1,0 +1,14 @@
+.gameScreen {
+  .inGameBtns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    margin-top: 10px;
+    button {
+      font-size: 1.2rem;
+    }
+  }
+  .clock {
+    margin: 30px auto 30px;
+  }
+}

@@ -1,6 +1,9 @@
 .settings {
   ul {
     margin-top: 20px;
+    & > * + * {
+      margin-top: 5px;
+    }
   }
   li {
     display: flex;
