@@ -1,4 +1,4 @@
-import {createRef, FC, useEffect, useRef, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {ITime} from 'types/ITime';
 import {compareTime, generateTime} from 'utils/time';
 import GameInfo from 'components/GameInfo';
@@ -41,13 +41,8 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         let x = settings.answerTime;
         setCurrentRound(currentRoundRef.current + 1);
         setRoundTime(generateTime());
+        setShouldFocus(true);
         setRoundStatus('going');
-
-        if (inputRef.current) {
-            console.log(1);
-            inputRef.current.focus();
-        }
-
         roundIntervalRef.current = setInterval(() => {
             // console.log('decrement');
             setTimeRemaining(prevState => prevState - 1);
@@ -83,9 +78,21 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         }, 1000);
     }
 
-    function handleFinish() {
+    const handleFinish = useCallback(() => {
         finishRound(getTimeFromStr(answerTimeStr));
-    }
+    }, [answerTimeStr]);
+
+    const handleAnswerTimeChange = useCallback((str: string) => {
+        setAnswerTimeStr(str);
+        if (settings.autoConfirm && isFulfilled(str)) {
+            handleFinish();
+        }
+    }, []);
+
+    //
+    // function handleFinish() {
+    //     finishRound(getTimeFromStr(answerTimeStr));
+    // }
 
     function isFulfilled(str: string) {
         return settings.enableSecondsInput && str.length === RAW_INPUT_LENGTH_SEC ||
@@ -109,7 +116,8 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         };
     }, []);
 
-    const inputRef = useRef<HTMLInputElement>();
+    const [shouldFocus, setShouldFocus] = useState(false);
+    const memoizedSetShouldFocus = useCallback(setShouldFocus, []);
 
     return (
         <div className={styles.gameScreen}>
@@ -122,15 +130,11 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
                 timeRemaining={timeRemaining}
             />
             <TimeForm
-                ref={inputRef}
+                shouldFocus={shouldFocus}
+                setShouldFocus={memoizedSetShouldFocus}
                 onSubmit={handleFinish}
-                timeStr={answerTimeStr}
-                setTimeStr={str => {
-                    setAnswerTimeStr(str);
-                    if (settings.autoConfirm && isFulfilled(str)) {
-                        handleFinish();
-                    }
-                }}
+                answerTimeStr={answerTimeStr}
+                setTimeStr={handleAnswerTimeChange}
                 disabled={roundStatus === 'finished'}
             />
             <div className={styles.inGameBtns}>

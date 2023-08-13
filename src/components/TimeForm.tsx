@@ -1,18 +1,20 @@
 import Cleave from 'cleave.js/react';
-import {FC, forwardRef} from 'react';
+import {FC, memo, useEffect, useRef} from 'react';
 import {useSettings} from 'hooks/settings';
 import styles from 'scss/TimeForm.module.scss';
 
 interface TimeFormProps {
-    timeStr: string;
+    answerTimeStr: string;
     setTimeStr: (str: string) => void;
     disabled: boolean;
     onSubmit: () => void;
-    ref: any;
+    shouldFocus: boolean;
+    setShouldFocus: (sf: boolean) => void;
 }
 
-const TimeForm: FC<TimeFormProps> = forwardRef(({onSubmit, timeStr, setTimeStr, disabled}, ref) => {
+const TimeForm: FC<TimeFormProps> = memo(({onSubmit, answerTimeStr, shouldFocus, setShouldFocus, setTimeStr, disabled}) => {
     const {autoConfirm, enableSecondsInput} = useSettings();
+    const inputRef = useRef<HTMLInputElement>();
 
     function handleChange(e: any) {
         const nextTimeStr = e.target.value;
@@ -23,22 +25,20 @@ const TimeForm: FC<TimeFormProps> = forwardRef(({onSubmit, timeStr, setTimeStr, 
         onSubmit();
     }
 
+    useEffect(() => {
+        if (shouldFocus && inputRef.current) {
+            inputRef.current.focus();
+            setShouldFocus(false);
+        }
+    }, [shouldFocus]);
+
     return (
         <form onSubmit={e => e.preventDefault()} className={styles.timeForm}>
             <Cleave
-                htmlRef={(inputNode: HTMLInputElement) => {
-                    if (!ref) {
-                        return
-                    }
-                    if (typeof ref === 'function') {
-                        ref(inputNode)
-                    } else {
-                        ref.current = inputNode
-                    }
-                }}
+                htmlRef={r => inputRef.current = r}
                 disabled={disabled}
                 placeholder={enableSecondsInput ? 'hh:mm:ss' : 'hh:mm'}
-                value={timeStr}
+                value={answerTimeStr}
                 options={{time: true, timePattern: enableSecondsInput ? ['h', 'm', 's'] : ['h', 'm'], timeFormat: '12'}}
                 onChange={handleChange}
             />
