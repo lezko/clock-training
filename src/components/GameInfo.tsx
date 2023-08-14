@@ -22,16 +22,15 @@ const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeRemaining, correct
             return null;
         }
 
-        if (isAnswerCorrect) {
-            return <FontAwesomeIcon className={styles.check} icon={faCheck} />
-        }
-
         if (!correctAnswer) {
             throw new Error('correctAnswer is undefined');
         }
+
+        const iconStyles = isAnswerCorrect ? styles.check : styles.xMark;
+        const icon = isAnswerCorrect ? faCheck : faXmark;
         return (
             <div>
-                <FontAwesomeIcon className={styles.xMark} icon={faXmark} />
+                <FontAwesomeIcon className={iconStyles} icon={icon} />
                 <span>{correctAnswer.h}:{correctAnswer.m}{enableSecondsInput && (':' + correctAnswer.s)}</span>
             </div>
         );

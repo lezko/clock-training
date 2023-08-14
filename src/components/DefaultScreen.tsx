@@ -41,7 +41,7 @@ const DefaultScreen: FC<DefaultScreenProps> = ({startGame}) => {
     return (
         <div>
             <Clock className={styles.clock} hour={time.h} min={time.m} sec={time.s} />
-            {/*<InGameSettings />*/}
+            <InGameSettings />
             <button className={styles.startBtn} onClick={startGame}>START</button>
         </div>
     );

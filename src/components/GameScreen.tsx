@@ -33,7 +33,7 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
     function startRound() {
         // console.log('started');
         clearInterval(newRoundIntervalRef.current);
-        if (currentRoundRef.current === settings.roundCount) {
+        if (currentRoundRef.current && currentRoundRef.current === settings.roundCount) {
             stopGame();
         }
         setAnswerTimeStr('');
@@ -68,6 +68,10 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         }
         setRoundStatus('finished');
         setNewRoundTimeRemaining(settings.newRoundDelay);
+
+        if (settings.newRoundDelay === 0) {
+            return;
+        }
         let x = settings.newRoundDelay;
         newRoundIntervalRef.current = setInterval(() => {
             setNewRoundTimeRemaining(prevState => prevState - 1);
@@ -88,11 +92,6 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
             handleFinish();
         }
     }, []);
-
-    //
-    // function handleFinish() {
-    //     finishRound(getTimeFromStr(answerTimeStr));
-    // }
 
     function isFulfilled(str: string) {
         return settings.enableSecondsInput && str.length === RAW_INPUT_LENGTH_SEC ||
@@ -141,7 +140,7 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
                 <button onClick={stopGame}>STOP</button>
                 <button disabled={roundStatus === 'going'} onClick={() => {
                     startRound();
-                }}>NEXT {roundStatus === 'finished' ? (`(${newRoundTimeRemaining})`) : ''}</button>
+                }}>NEXT {settings.newRoundDelay && roundStatus === 'finished' ? (`(${newRoundTimeRemaining})`) : ''}</button>
             </div>
         </div>
     );

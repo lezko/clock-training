@@ -6,6 +6,7 @@ import {useSettings} from 'hooks/settings';
 import {useAppDispatch} from 'store';
 import {setSettings} from 'store/settings/slice';
 import {ThemeType} from 'enums/ThemeType';
+import NewRoundSetting from 'components/settings/NewRoundSetting';
 
 const Settings = () => {
     const settings = useSettings();
@@ -57,6 +58,8 @@ const Settings = () => {
                         <option value="Dark">Dark</option>
                     </select>
                 </li>
+
+                <NewRoundSetting />
             </ul>
         </div>
     );

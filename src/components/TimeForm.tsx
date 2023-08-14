@@ -35,6 +35,7 @@ const TimeForm: FC<TimeFormProps> = memo(({onSubmit, answerTimeStr, shouldFocus,
     return (
         <form onSubmit={e => e.preventDefault()} className={styles.timeForm}>
             <Cleave
+                type="number"
                 htmlRef={r => inputRef.current = r}
                 disabled={disabled}
                 placeholder={enableSecondsInput ? 'hh:mm:ss' : 'hh:mm'}

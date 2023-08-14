@@ -10,6 +10,7 @@ export interface SettingsState {
     // todo find better name
     valueSpread: number;
     roundCount: number;
+    // todo probably unnecessary state
     answerTime: number;
     enableSecondsInput: boolean;
     newRoundDelay: number;
