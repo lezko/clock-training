@@ -10,6 +10,7 @@ export interface SettingsState {
     // todo find better name
     valueSpread: number;
     roundCount: number;
+    timeFormat: '12h' | '24h';
     // todo probably unnecessary state
     answerTime: number;
     enableSecondsInput: boolean;
@@ -25,6 +26,7 @@ const initialState: SettingsState = {
     valueSpread: 300,
     answerTime: 10,
     roundCount: 5,
+    timeFormat: '12h',
     newRoundDelay: 3,
     enableSecondsInput: false,
     theme: ThemeType.Dark

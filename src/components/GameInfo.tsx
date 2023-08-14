@@ -15,7 +15,7 @@ interface GameInfoProps {
 }
 
 const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeRemaining, correctAnswer, isAnswerCorrect}) => {
-    const {enableSecondsInput} = useSettings();
+    const {enableSecondsInput, timeFormat} = useSettings();
 
     function getRoundResult() {
         if (typeof isAnswerCorrect === 'undefined') {
@@ -31,7 +31,7 @@ const GameInfo: FC<GameInfoProps> = ({round, totalRounds, timeRemaining, correct
         return (
             <div>
                 <FontAwesomeIcon className={iconStyles} icon={icon} />
-                <span>{correctAnswer.h}:{correctAnswer.m}{enableSecondsInput && (':' + correctAnswer.s)}</span>
+                <span>{correctAnswer.h + (timeFormat === '24h' ? 12 : 0)}:{correctAnswer.m}{enableSecondsInput && (':' + correctAnswer.s)}</span>
             </div>
         );
     }

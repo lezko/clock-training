@@ -18,5 +18,7 @@ function toSeconds(time: ITime) {
 }
 
 export function compareTime(t1: ITime, t2: ITime, error: number) {
-    return Math.abs(toSeconds(t1) - toSeconds(t2)) <= error;
+    const sec1 = toSeconds(t1) % SECS_IN_HALF_DAY;
+    const sec2 = toSeconds(t2) % SECS_IN_HALF_DAY;
+    return Math.abs(sec1 - sec2) <= error;
 }

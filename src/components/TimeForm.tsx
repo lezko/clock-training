@@ -13,7 +13,7 @@ interface TimeFormProps {
 }
 
 const TimeForm: FC<TimeFormProps> = memo(({onSubmit, answerTimeStr, shouldFocus, setShouldFocus, setTimeStr, disabled}) => {
-    const {autoConfirm, enableSecondsInput} = useSettings();
+    const {autoConfirm, enableSecondsInput, timeFormat} = useSettings();
     const inputRef = useRef<HTMLInputElement>();
 
     function handleChange(e: any) {
@@ -35,12 +35,12 @@ const TimeForm: FC<TimeFormProps> = memo(({onSubmit, answerTimeStr, shouldFocus,
     return (
         <form onSubmit={e => e.preventDefault()} className={styles.timeForm}>
             <Cleave
-                type="number"
+                type="tel"
                 htmlRef={r => inputRef.current = r}
                 disabled={disabled}
                 placeholder={enableSecondsInput ? 'hh:mm:ss' : 'hh:mm'}
                 value={answerTimeStr}
-                options={{time: true, timePattern: enableSecondsInput ? ['h', 'm', 's'] : ['h', 'm'], timeFormat: '12'}}
+                options={{time: true, timePattern: enableSecondsInput ? ['h', 'm', 's'] : ['h', 'm'], timeFormat: timeFormat.slice(0, -1)}}
                 onChange={handleChange}
             />
             {!autoConfirm && <button disabled={disabled} onClick={handleSubmit}>OK</button>}
