@@ -62,7 +62,11 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         clearInterval(roundIntervalRef.current);
         // todo accept answer if it is ready but 'ok' not clicked
         if (time) {
-            setIsAnswerCorrect(compareTime(time, roundTimeRef.current, settings.valueSpread));
+            const t = {...roundTimeRef.current};
+            if (settings.timeFormat === '24h') {
+                t.h += 12;
+            }
+            setIsAnswerCorrect(compareTime(time, t, settings.valueSpread));
         } else {
             setIsAnswerCorrect(false);
         }
