@@ -8,7 +8,7 @@ const About = () => {
         <div className={styles.about}>
             <nav className={navStyles.nav}><IconLink icon={faArrowLeft} path="/main" /></nav>
             <main>
-                about
+                Every round you need to input time displayed on the clock. Feel free to experiment with game settings!
             </main>
         </div>
     );
