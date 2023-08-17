@@ -7,7 +7,7 @@ interface ITheme {
 }
 
 const LightTheme: ITheme = {
-    bgColor: '#cbd290',
+    bgColor: '#f9fcdc',
     primaryColor: '#356c35',
     secondaryColor: '#e7b14a'
 };
