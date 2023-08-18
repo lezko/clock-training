@@ -87,7 +87,7 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
     }
 
     const handleFinish = useCallback(() => {
-        finishRound(getTimeFromStr(answerTimeStr));
+        finishRound(getTimeFromStr(answerTimeStrRef.current));
     }, [answerTimeStr]);
 
     const handleAnswerTimeChange = useCallback((str: string) => {
