@@ -7,6 +7,9 @@ import {useAppDispatch} from 'store';
 import {setSettings} from 'store/settings/slice';
 import {ThemeType} from 'enums/ThemeType';
 import NewRoundSetting from 'components/settings/NewRoundSetting';
+import ShowMinuteMarksSetting from 'components/settings/general/ShowMinuteMarksSetting';
+
+const ID_PREFIX = 'settings-input-';
 
 const Settings = () => {
     const settings = useSettings();
@@ -18,15 +21,10 @@ const Settings = () => {
 
             <ul>
                 <li>
-                    <span>Show minute marks</span>
-                    <input
-                        type="checkbox"
-                        checked={settings.showMinuteMarks}
-                        onChange={() => dispatch(setSettings({showMinuteMarks: !settings.showMinuteMarks}))}
-                    />
+                    <ShowMinuteMarksSetting />
                 </li>
                 <li>
-                    <span>Show numbers</span>
+                    <label>Show numbers</label>
                     <input
                         type="checkbox"
                         checked={settings.showNumbers}
@@ -34,7 +32,7 @@ const Settings = () => {
                     />
                 </li>
                 <li>
-                    <span>Show seconds arrow</span>
+                    <label>Show seconds arrow</label>
                     <input
                         type="checkbox"
                         checked={settings.showSeconds}
@@ -42,7 +40,7 @@ const Settings = () => {
                     />
                 </li>
                 <li>
-                    <span>Auto confirm answers</span>
+                    <label>Auto confirm answers</label>
                     <input
                         type="checkbox"
                         checked={settings.autoConfirm}
@@ -50,7 +48,7 @@ const Settings = () => {
                     />
                 </li>
                 <li>
-                    <span>Theme</span>
+                    <label>Theme</label>
                     <select value={settings.theme} onChange={e => {
                         dispatch(setSettings({theme: e.target.value === 'Light' ? ThemeType.Light : ThemeType.Dark}));
                     }}>

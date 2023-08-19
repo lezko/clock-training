@@ -2,10 +2,10 @@ import {useSettings} from 'hooks/settings';
 import {useAppDispatch} from 'store';
 import {setSettings} from 'store/settings/slice';
 import styles from 'scss/InGameSettings.module.scss';
-import RoundsSetting from 'components/settings/RoundsSetting';
-import MaxAnswerErrorSetting from 'components/settings/MaxAnswerErrorSetting';
-import AnswerTimeSetting from 'components/settings/AnswerTimeSetting';
-import TimeFormatSetting from 'components/settings/TimeFormatSetting';
+import RoundsSetting from 'components/settings/in-game/RoundsSetting';
+import MaxAnswerErrorSetting from 'components/settings/in-game/MaxAnswerErrorSetting';
+import AnswerTimeSetting from 'components/settings/in-game/AnswerTimeSetting';
+import TimeFormatSetting from 'components/settings/in-game/TimeFormatSetting';
 
 const InGameSettings = () => {
     const settings = useSettings();
