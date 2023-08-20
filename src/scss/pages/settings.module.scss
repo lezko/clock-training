@@ -1,6 +1,9 @@
 .settings {
   font-size: 1.5rem;
 
+  input[type="checkbox"] {
+    width: 20px;
+  }
   ul {
     margin-top: 20px;
     & > * + * {
@@ -10,8 +13,5 @@
   ul > * {
     display: flex;
     justify-content: space-between;
-    input {
-      width: 20px;
-    }
   }
 }

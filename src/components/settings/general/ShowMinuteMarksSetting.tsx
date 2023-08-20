@@ -8,7 +8,7 @@ const ShowMinuteMarksSetting = () => {
     const {showMinuteMarks} = useSettings();
     const [id] = useState(String(Math.random()));
     return (
-        <div>
+        <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
             <label htmlFor={id}>Show minute marks</label>
             <input
                 type="checkbox"
