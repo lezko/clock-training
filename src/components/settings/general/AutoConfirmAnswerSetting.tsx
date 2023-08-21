@@ -1,24 +1,25 @@
 import {setSettings} from 'store/settings/slice';
-import {useAppDispatch} from 'store';
 import {useSettings} from 'hooks/settings';
+import {useAppDispatch} from 'store';
 import {useState} from 'react';
 import styles from 'scss/Setting.module.scss';
 
-const ShowMinuteMarksSetting = () => {
+const AutoConfirmAnswerSetting = () => {
+    const {autoConfirm} = useSettings();
     const dispatch = useAppDispatch();
-    const {showMinuteMarks} = useSettings();
     const [id] = useState(String(Math.random()));
+
     return (
         <div className={styles.setting}>
-            <label htmlFor={id}>Show minute marks</label>
+            <label htmlFor={id}>Auto confirm answers</label>
             <input
-                type="checkbox"
                 id={id}
-                checked={showMinuteMarks}
-                onChange={() => dispatch(setSettings({showMinuteMarks: !showMinuteMarks}))}
+                type="checkbox"
+                checked={autoConfirm}
+                onChange={() => dispatch(setSettings({autoConfirm: !autoConfirm}))}
             />
         </div>
     );
 };
 
-export default ShowMinuteMarksSetting;
+export default AutoConfirmAnswerSetting;

@@ -1,13 +1,15 @@
 import {useSettings} from 'hooks/settings';
 import {useAppDispatch} from 'store';
-import {ChangeEvent} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {setSettings} from 'store/settings/slice';
+import styles from 'scss/Setting.module.scss';
 
 const NewRoundSetting = () => {
     const {newRoundDelay} = useSettings();
     const dispatch = useAppDispatch();
     const optionStr = `don't start automatically`;
     const options = [3, 5, 7, 10, optionStr];
+    const [id] = useState(String(Math.random()));
 
     function handleChange(e: ChangeEvent<HTMLSelectElement>) {
         let nextNewRoundDelay;
@@ -20,9 +22,9 @@ const NewRoundSetting = () => {
     }
 
     return (
-        <div>
-            <span>Start new round after</span>
-            <select onChange={handleChange} value={newRoundDelay || optionStr}>
+        <div className={styles.setting}>
+            <label htmlFor={id}>Start new round after</label>
+            <select onChange={handleChange} id={id} value={newRoundDelay || optionStr}>
                 {options.map(o =>
                     <option key={o} value={o}>{isNaN(+o) ? o : o + ' seconds'}</option>
                 )}

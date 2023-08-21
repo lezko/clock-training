@@ -1,24 +1,25 @@
 import {setSettings} from 'store/settings/slice';
-import {useAppDispatch} from 'store';
 import {useSettings} from 'hooks/settings';
+import {useAppDispatch} from 'store';
 import {useState} from 'react';
 import styles from 'scss/Setting.module.scss';
 
-const ShowMinuteMarksSetting = () => {
+const ShowSecondsArrowSetting = () => {
+    const {showSeconds} = useSettings();
     const dispatch = useAppDispatch();
-    const {showMinuteMarks} = useSettings();
     const [id] = useState(String(Math.random()));
+
     return (
         <div className={styles.setting}>
-            <label htmlFor={id}>Show minute marks</label>
+            <label htmlFor={id}>Show seconds arrow</label>
             <input
-                type="checkbox"
                 id={id}
-                checked={showMinuteMarks}
-                onChange={() => dispatch(setSettings({showMinuteMarks: !showMinuteMarks}))}
+                type="checkbox"
+                checked={showSeconds}
+                onChange={() => dispatch(setSettings({showSeconds: !showSeconds}))}
             />
         </div>
     );
 };
 
-export default ShowMinuteMarksSetting;
+export default ShowSecondsArrowSetting;
