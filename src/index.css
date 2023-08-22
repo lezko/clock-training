@@ -55,8 +55,8 @@ button[disabled] {
     border-color: gray;
     background-color: var(--bg-color);
 }
-button:focus {
-    /*border-color: yellow !important;*/
+button:focus, input:focus {
+    box-shadow: 0 0 1px 2px var(--primary-color);
 }
 
 /* remote number input arrows */

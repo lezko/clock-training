@@ -1,0 +1,18 @@
+.finishScreen {
+  margin-top: 30px;
+  font-size: 1.3rem;
+  .result {
+    display: flex;
+    justify-content: center;
+    white-space: break-spaces;
+  }
+  .buttons {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+  button {
+    font-size: inherit;
+  }
+}

@@ -3,7 +3,7 @@ import {ITime} from 'types/ITime';
 import {compareTime, generateTime} from 'utils/time';
 import GameInfo from 'components/GameInfo';
 import TimeForm from 'components/TimeForm';
-import styles from 'scss/GameScreen.module.scss';
+import styles from 'scss/main-screens/GameScreen.module.scss';
 import {useSettings} from 'hooks/settings';
 import Clock from 'components/Clock';
 import {useStateAndRef} from 'hooks/useStateAndRef';
@@ -12,7 +12,7 @@ const RAW_INPUT_LENGTH = 5;
 const RAW_INPUT_LENGTH_SEC = 8;
 
 interface GameScreenProps {
-    stopGame: () => void;
+    stopGame: (roundsWon?: number) => void;
 }
 
 // TODO replace all these hacky refs with effects
@@ -26,6 +26,7 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
     const [answerTimeStr, setAnswerTimeStr, answerTimeStrRef] = useStateAndRef('');
     const [currentRound, setCurrentRound, currentRoundRef] = useStateAndRef(0);
     const roundIntervalRef = useRef<any>();
+    const [roundsWon, setRoundsWon, roundsWonRef] = useStateAndRef(0);
 
     const [newRoundTimeRemaining, setNewRoundTimeRemaining] = useState(settings.newRoundDelay);
     const newRoundIntervalRef = useRef<any>();
@@ -34,7 +35,7 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         // console.log('started');
         clearInterval(newRoundIntervalRef.current);
         if (currentRoundRef.current && currentRoundRef.current === settings.roundCount) {
-            stopGame();
+            stopGame(roundsWonRef.current);
         }
         setAnswerTimeStr('');
         setTimeRemaining(settings.answerTime);
@@ -61,15 +62,18 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
         // console.log('finished');
         clearInterval(roundIntervalRef.current);
         // todo accept answer if it is ready but 'ok' not clicked
+        let nextIsAnswerCorrect = false;
         if (time) {
             const t = {...roundTimeRef.current};
             if (settings.timeFormat === '24h') {
                 t.h += 12;
             }
-            setIsAnswerCorrect(compareTime(time, t, settings.valueSpread));
-        } else {
-            setIsAnswerCorrect(false);
+            nextIsAnswerCorrect = compareTime(time, t, settings.valueSpread);
         }
+        if (nextIsAnswerCorrect) {
+            setRoundsWon(roundsWonRef.current + 1);
+        }
+        setIsAnswerCorrect(nextIsAnswerCorrect);
         setRoundStatus('finished');
         setNewRoundTimeRemaining(settings.newRoundDelay);
 
@@ -102,11 +106,15 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
             !settings.enableSecondsInput && str.length === RAW_INPUT_LENGTH;
     }
 
+    function handleStop() {
+        stopGame();
+    }
 
     function cleanup() {
         clearInterval(roundIntervalRef.current);
         clearInterval(newRoundIntervalRef.current);
         setCurrentRound(0);
+        setRoundsWon(0);
         roundIntervalRef.current = null;
     }
 
@@ -141,10 +149,10 @@ const GameScreen: FC<GameScreenProps> = ({stopGame}) => {
                 disabled={roundStatus === 'finished'}
             />
             <div className={styles.inGameBtns}>
-                <button onClick={stopGame}>STOP</button>
                 <button disabled={roundStatus === 'going'} onClick={() => {
                     startRound();
                 }}>NEXT {settings.newRoundDelay && roundStatus === 'finished' ? (`(${newRoundTimeRemaining})`) : ''}</button>
+                <button onClick={handleStop}>STOP</button>
             </div>
         </div>
     );
