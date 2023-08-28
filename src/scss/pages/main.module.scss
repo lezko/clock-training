@@ -8,12 +8,16 @@
   }
   button {
     padding: 10px;
+    @media (max-width: 500px) {
+      font-size: 1.1rem;
+    }
   }
 
   .startBtn {
     width: 100%;
   }
 }
+
 
 // todo move to global styles
 .clock {

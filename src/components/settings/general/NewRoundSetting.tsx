@@ -7,7 +7,7 @@ import styles from 'scss/Setting.module.scss';
 const NewRoundSetting = () => {
     const {newRoundDelay} = useSettings();
     const dispatch = useAppDispatch();
-    const optionStr = `don't start automatically`;
+    const optionStr = `no autostart`;
     const options = [3, 5, 7, 10, optionStr];
     const [id] = useState(String(Math.random()));
 

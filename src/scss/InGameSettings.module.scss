@@ -10,8 +10,14 @@
 
   & > * + * {
     margin-top: 10px;
+    @media (max-width: 500px) {
+      margin-top: 5px;
+    }
   }
 
+  @media (max-width: 500px) {
+    font-size: 1.1rem;
+  }
   //.rounds {
   //  input[type="radio"] {
   //    width: 25px;
